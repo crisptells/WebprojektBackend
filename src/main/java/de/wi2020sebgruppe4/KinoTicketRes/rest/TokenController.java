@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import de.wi2020sebgruppe4.KinoTicketRes.model.PasswordResetObject;
 import de.wi2020sebgruppe4.KinoTicketRes.model.Token;
 import de.wi2020sebgruppe4.KinoTicketRes.model.TokenRequestObject;
 import de.wi2020sebgruppe4.KinoTicketRes.model.User;
@@ -84,16 +83,16 @@ public class TokenController {
     }
 
     @GetMapping("/resetWithLink/{tokenID}")
-    public ResponseEntity<Object> doResetWithLink(@RequestBody PasswordResetObject pro, @PathVariable UUID tokenID) {
+    public ResponseEntity<Object> doResetWithLink(@PathVariable UUID tokenID) {
         Optional<Token> t = repo.findById(tokenID);
         Token token = null;
         try {
             token = t.get();
 
             // Check if its the same user that requested the reset
-            if(!pro.userID.toString().equals(token.getUser().getId().toString())) {
-                return new ResponseEntity<Object>("UserID is not valid!", HttpStatus.UNAUTHORIZED);
-            }
+//            if(!pro.userID.toString().equals(token.getUser().getId().toString())) {
+//                return new ResponseEntity<Object>("UserID is not valid!", HttpStatus.UNAUTHORIZED);
+//            }
 
             // Check if Token was used before and therefore is not valid
             if(!token.isValid()) {
@@ -101,15 +100,15 @@ public class TokenController {
             }
 
             
-            Optional<User> u = userRepository.findById(token.getUser().getId());
-            try {
-                User user = u.get();
-                user.setPassword(pro.password);
-                userRepository.save(user);
-            }
-            catch (NoSuchElementException e) {
-                return new ResponseEntity<Object>("UserID: "+ token.getUser().getId()+" not found :(", HttpStatus.NOT_FOUND);
-            }
+//            Optional<User> u = userRepository.findById(token.getUser().getId());
+//            try {
+//                User user = u.get();
+//                user.setPassword(pro.password);
+//                userRepository.save(user);
+//            }
+//            catch (NoSuchElementException e) {
+//                return new ResponseEntity<Object>("UserID: "+ token.getUser().getId()+" not found :(", HttpStatus.NOT_FOUND);
+//            }
         }
         catch (NoSuchElementException e) {
             return new ResponseEntity<Object>("Token not found", HttpStatus.NOT_FOUND);
@@ -119,39 +118,39 @@ public class TokenController {
     }
 
     @PutMapping("/reset/confirm")
-    public ResponseEntity<Object> doReset(@RequestBody PasswordResetObject pro) {
-        Optional<Token> t = repo.findById(pro.tokenID);
-
-        try {
-            Token token = t.get();
-
-            // Check if its the same user that requested the reset
-            if(!pro.userID.toString().equals(token.getUser().getId().toString())) {
-                return new ResponseEntity<Object>("UserID is not valid!", HttpStatus.UNAUTHORIZED);
-            }
-
-            // Check if Token was used before and therefore is not valid
-            if(!token.isValid()) {
-                return new ResponseEntity<Object>("Token is not valid! Was it used already?", HttpStatus.UNAUTHORIZED);
-            }
-
-            token.setValid(false);
-            Optional<User> u = userRepository.findById(pro.userID);
-            try {
-                User user = u.get();
-                user.setPassword(pro.password);
-                userRepository.save(user);
-            }
-            catch (NoSuchElementException e) {
-                return new ResponseEntity<Object>("UserID: "+ pro.userID +" not found :(", HttpStatus.NOT_FOUND);
-            }
-        }
-        catch (NoSuchElementException e) {
-            return new ResponseEntity<Object>("TokenID: "+ pro.tokenID +" not found :(", HttpStatus.NOT_FOUND);
-        }
-
-        return null;
-    }
+//    public ResponseEntity<Object> doReset(@RequestBody PasswordResetObject pro) {
+//        Optional<Token> t = repo.findById(pro.tokenID);
+//
+//        try {
+//            Token token = t.get();
+//
+//            // Check if its the same user that requested the reset
+//            if(!pro.userID.toString().equals(token.getUser().getId().toString())) {
+//                return new ResponseEntity<Object>("UserID is not valid!", HttpStatus.UNAUTHORIZED);
+//            }
+//
+//            // Check if Token was used before and therefore is not valid
+//            if(!token.isValid()) {
+//                return new ResponseEntity<Object>("Token is not valid! Was it used already?", HttpStatus.UNAUTHORIZED);
+//            }
+//
+//            token.setValid(false);
+//            Optional<User> u = userRepository.findById(pro.userID);
+//            try {
+//                User user = u.get();
+//                user.setPassword(pro.password);
+//                userRepository.save(user);
+//            }
+//            catch (NoSuchElementException e) {
+//                return new ResponseEntity<Object>("UserID: "+ pro.userID +" not found :(", HttpStatus.NOT_FOUND);
+//            }
+//        }
+//        catch (NoSuchElementException e) {
+//            return new ResponseEntity<Object>("TokenID: "+ pro.tokenID +" not found :(", HttpStatus.NOT_FOUND);
+//        }
+//
+//        return null;
+//    }
 
     @DeleteMapping("/deleteAll")
     public ResponseEntity<Object> deleteAll() {

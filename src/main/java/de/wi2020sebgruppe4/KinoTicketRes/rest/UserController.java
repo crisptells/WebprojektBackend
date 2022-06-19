@@ -20,8 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 import de.wi2020sebgruppe4.KinoTicketRes.model.User;
 import de.wi2020sebgruppe4.KinoTicketRes.model.UserRegistrationObject;
 import de.wi2020sebgruppe4.KinoTicketRes.model.UserRequestObject;
-import de.wi2020sebgruppe4.KinoTicketRes.repositories.ReviewRepository;
-import de.wi2020sebgruppe4.KinoTicketRes.repositories.TicketRepository;
 import de.wi2020sebgruppe4.KinoTicketRes.repositories.UserRepository;
 
 @Controller
@@ -42,14 +40,7 @@ public class UserController {
 	
 	@Autowired
 	private UserRepository repo;
-	
-	@Autowired 
-	private TicketRepository ticketRepository;
-	
-	@Autowired
-	private ReviewRepository reviewRepository;
-	
-	
+		
 	@GetMapping("")
 	public ResponseEntity<Iterable<User>> getUsers(){
 		return new ResponseEntity<>(repo.findAll(), HttpStatus.OK);
@@ -143,26 +134,26 @@ public class UserController {
 	
 	@GetMapping("/{id}/tickets")
 	public ResponseEntity<Object> getUsersTickets(@PathVariable UUID id) {
-		Optional<User> u = repo.findById(id);
-		try {
-			User user = u.get();
-			return new ResponseEntity<Object>(ticketRepository.findAllByUser(user), HttpStatus.OK);
-		}
-		catch (NoSuchElementException e) {
+//		Optional<User> u = repo.findById(id);
+//		try {
+//			User user = u.get();
+//			return new ResponseEntity<Object>(ticketRepository.findAllByUser(user), HttpStatus.OK);
+//		}
+//		catch (NoSuchElementException e) {
 			return new ResponseEntity<Object>("UserID: "+ id +" not found :(", HttpStatus.NOT_FOUND);
-		}
+//		}
 	}
 	
 	@GetMapping("/{id}/reviews")
 	public ResponseEntity<Object> getusersReviews(@PathVariable UUID id) {
-		Optional<User> u = repo.findById(id);
-		try {
-			User user = u.get();
-			return new ResponseEntity<Object>(reviewRepository.findAllByUser(user), HttpStatus.OK);
-		}
-		catch (NoSuchElementException e) {
+//		Optional<User> u = repo.findById(id);
+//		try {
+//			User user = u.get();
+//			return new ResponseEntity<Object>(reviewRepository.findAllByUser(user), HttpStatus.OK);
+//		}
+//		catch (NoSuchElementException e) {
 			return new ResponseEntity<Object>("UserID: "+ id +" not found :(", HttpStatus.NOT_FOUND);
-		}
+//		}
 	}
 	
 	@GetMapping("/{id}")
