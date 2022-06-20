@@ -33,7 +33,7 @@ public class InstrumentController {
 	@GetMapping("")
 	public ResponseEntity<Iterable<Object>> getInstruments(){
 		return new ResponseEntity(repo.findAll(), HttpStatus.OK);
-	}	
+	}
 	
 	@PutMapping("/add")
 	public ResponseEntity<Object> addInstrument(@RequestBody InstrumentRequestObject iro){
@@ -46,8 +46,6 @@ public class InstrumentController {
 		toAddInstrument.setType(iro.type);
 		return new ResponseEntity<Object>(repo.save(toAddInstrument), HttpStatus.CREATED);
 	}
-	
-	
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<Object> getInstrument(@PathVariable UUID id){
