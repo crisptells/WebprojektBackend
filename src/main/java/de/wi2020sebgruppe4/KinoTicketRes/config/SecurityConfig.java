@@ -66,16 +66,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements Filt
         CorsConfiguration configuration = new CorsConfiguration();
 
         configuration.setAllowedOrigins(Arrays.asList(
-                "https://kinoticketres.web.app/",
-        		"https://localhost/",
-        		"https://localhost:3000/",
-        		"https://localhost:3001/",
-        		"https://localhost:3002/",
-        		"http://localhost/",
-        		"http://localhost:3000/",
-				"http://localhost:3001/",
-				"http://localhost:3002/",
-                "http://localhost:4200/"));
+                "*"));
         configuration.setAllowedMethods(Arrays.asList("HEAD", "GET", "PUT", "DELETE", "PATCH"));
         configuration.setAllowCredentials(true);
         configuration.setAllowedHeaders(Arrays.asList("*"));
