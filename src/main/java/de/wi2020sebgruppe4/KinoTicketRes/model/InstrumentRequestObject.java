@@ -2,11 +2,11 @@ package de.wi2020sebgruppe4.KinoTicketRes.model;
 
 public class InstrumentRequestObject {
 
-	private String type;
-	private double price;
-	private String name;
-	private String description;
-	private String category;
+	public String type;
+	public double price;
+	public String name;
+	public String description;
+	public String category;
 
     public InstrumentRequestObject(String type, double price, String name, String description, String category) {
         super();

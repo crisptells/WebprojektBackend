@@ -4,8 +4,8 @@ import java.util.UUID;
 
 import org.springframework.data.repository.CrudRepository;
 
-import de.wi2020sebgruppe4.KinoTicketRes.model.Token;
+import de.wi2020sebgruppe4.KinoTicketRes.model.Instrument;
 
-public interface InstrumentRepository extends CrudRepository<Token, UUID>{
+public interface InstrumentRepository extends CrudRepository<Instrument, UUID>{
 
 }
