@@ -3,11 +3,16 @@ package de.wi2020sebgruppe4.KinoTicketRes.model;
 import java.util.UUID;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
+
 import org.springframework.lang.NonNull;
 
+@Entity
+@Table(name="instruments")
 public class Instrument {
 	@Id
     @Column(columnDefinition= "VARBINARY(16)")

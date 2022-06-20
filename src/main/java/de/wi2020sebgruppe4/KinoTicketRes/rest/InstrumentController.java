@@ -1,5 +1,6 @@
 package de.wi2020sebgruppe4.KinoTicketRes.rest;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
@@ -66,7 +67,7 @@ public class InstrumentController {
 	
 	@GetMapping("/getAllType/{type}")
 	public ResponseEntity<Object> getAllByType(@PathVariable String type){
-		Iterable<Instrument> toReturn;
+		Optional<List<Instrument>> toReturn;
 		try {
 			toReturn = repo.findAllByType(type);
 		}
@@ -120,7 +121,7 @@ public class InstrumentController {
 	
 	@GetMapping("/AllBooked") 
 	public ResponseEntity<Object> getAllBooked() {
-		Iterable<Instrument> toReturn;
+		Optional<List<Instrument>> toReturn;
 		try {
 			toReturn = repo.findAllByBooked(false);
 		}
