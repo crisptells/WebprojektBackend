@@ -1,4 +1,4 @@
-## WebprojektBackend
+# WebprojektBackend
 Java Spring Boot Backend für das Webprojekt
 
 ## Methoden
@@ -10,7 +10,7 @@ Instrument: "/instruments"
 - Instrument als Ausgeliehen markieren: Put "/book/{id}"
 - Instrument als Verfügbar markieren: Put "/return/{id}"
 
-# Instrument Hinzufügen: Put "/add" 
+## Instrument Hinzufügen: Put "/add" 
 RequestObjekt:
 	String type;
 	double price;
@@ -18,4 +18,4 @@ RequestObjekt:
 	String description;
 	String category;
 
-# Instrument Löschen: Delete "/{id}"
+## Instrument Löschen: Delete "/{id}"
