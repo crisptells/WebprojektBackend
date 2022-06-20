@@ -24,7 +24,6 @@ import de.wi2020sebgruppe4.KinoTicketRes.repositories.InstrumentRepository;
 
 @Controller
 @RestController
-@CrossOrigin(origins = {"*"})
 @RequestMapping("/instruments")
 public class InstrumentController {
 	
@@ -123,7 +122,7 @@ public class InstrumentController {
 	public ResponseEntity<Object> getAllBooked() {
 		Optional<List<Instrument>> toReturn;
 		try {
-			toReturn = repo.findAllByBooked(false);
+			toReturn = repo.findAllByAvailable(false);
 		}
 		catch(NoSuchElementException e) {
 			return new ResponseEntity<Object>("Booked instruments not found!", HttpStatus.NOT_FOUND);

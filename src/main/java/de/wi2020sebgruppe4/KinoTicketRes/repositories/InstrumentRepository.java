@@ -12,5 +12,5 @@ import de.wi2020sebgruppe4.KinoTicketRes.model.Instrument;
 @Repository
 public interface InstrumentRepository extends CrudRepository<Instrument, UUID>{
 	Optional<List<Instrument>> findAllByType(String type);
-	Optional<List<Instrument>> findAllByBooked(boolean available);
+	Optional<List<Instrument>> findAllByAvailable(boolean available);
 }
