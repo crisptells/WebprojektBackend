@@ -31,7 +31,7 @@ public class InstrumentController {
 	InstrumentRepository repo;
 	
 	@GetMapping("")
-	public ResponseEntity<Iterable<Object>> getUsers(){
+	public ResponseEntity<Iterable<Object>> getInstruments(){
 		return new ResponseEntity(repo.findAll(), HttpStatus.OK);
 	}	
 	
@@ -47,8 +47,10 @@ public class InstrumentController {
 		return new ResponseEntity<Object>(repo.save(toAddInstrument), HttpStatus.CREATED);
 	}
 	
+	
+	
 	@GetMapping("/{id}")
-	public ResponseEntity<Object> getSpecific(@PathVariable UUID id){
+	public ResponseEntity<Object> getInstrument(@PathVariable UUID id){
 		
 		Optional<Instrument> instrument = repo.findById(id);
 		
@@ -62,8 +64,21 @@ public class InstrumentController {
 		
 	}
 	
+	@GetMapping("/getAllType/{type}")
+	public ResponseEntity<Object> getAllByType(@PathVariable String type){
+		Iterable<Instrument> toReturn;
+		try {
+			toReturn = repo.findAllByType(type);
+		}
+		catch(NoSuchElementException e) {
+			return new ResponseEntity<Object>("Instrument type "+type+" not found!", HttpStatus.NOT_FOUND);
+		}
+		
+		return new ResponseEntity<Object>(toReturn, HttpStatus.OK);
+	}
+	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Object> deleteUser(@PathVariable UUID id){
+	public ResponseEntity<Object> deleteInstrument(@PathVariable UUID id){
 		Optional<Instrument> o = repo.findById(id);
 		try {
 			repo.deleteById(o.get().getId());
