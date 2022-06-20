@@ -88,6 +88,46 @@ public class InstrumentController {
 		}
 	}
 	
+	@PutMapping("/book/{id}")
+	public ResponseEntity<Object> bookInstrument(@PathVariable UUID id){
+		Optional<Instrument> i = repo.findById(id);
+		Instrument toBook;
+		try {
+			toBook = i.get();
+		}
+		catch(NoSuchElementException e) {
+			return new ResponseEntity<Object>("Instrument "+id+" not found!", HttpStatus.NOT_FOUND);
+		}
+		
+		toBook.setAvailable(false);
+		return new ResponseEntity<Object>(toBook, HttpStatus.OK);
+	}
 	
+	@PutMapping("/return/{id}")
+	public ResponseEntity<Object> returnInstrument(@PathVariable UUID id){
+		Optional<Instrument> i = repo.findById(id);
+		Instrument toBook;
+		try {
+			toBook = i.get();
+		}
+		catch(NoSuchElementException e) {
+			return new ResponseEntity<Object>("Instrument "+id+" not found!", HttpStatus.NOT_FOUND);
+		}
+		
+		toBook.setAvailable(true);
+		return new ResponseEntity<Object>(toBook, HttpStatus.OK);
+	}
 	
+	@GetMapping("/AllBooked") 
+	public ResponseEntity<Object> getAllBooked() {
+		Iterable<Instrument> toReturn;
+		try {
+			toReturn = repo.findAllByBooked(false);
+		}
+		catch(NoSuchElementException e) {
+			return new ResponseEntity<Object>("Booked instruments not found!", HttpStatus.NOT_FOUND);
+		}
+		
+		return new ResponseEntity<Object>(toReturn, HttpStatus.OK);
+	}
 }
