@@ -60,7 +60,6 @@ public class InstrumentController {
 		catch(NoSuchElementException e) {
 			return new ResponseEntity<Object>("Instrument "+id+" not found!", HttpStatus.NOT_FOUND);
 		}
-		
 	}
 	
 	@GetMapping("/getForUser/{user_id}")
