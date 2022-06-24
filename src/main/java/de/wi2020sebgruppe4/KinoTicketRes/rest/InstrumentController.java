@@ -44,6 +44,7 @@ public class InstrumentController {
 		toAddInstrument.setName(iro.name);
 		toAddInstrument.setPrice(iro.price);
 		toAddInstrument.setType(iro.type);
+		toAddInstrument.setuserId(iro.user_id);
 		return new ResponseEntity<Object>(repo.save(toAddInstrument), HttpStatus.CREATED);
 	}
 	
@@ -60,6 +61,18 @@ public class InstrumentController {
 			return new ResponseEntity<Object>("Instrument "+id+" not found!", HttpStatus.NOT_FOUND);
 		}
 		
+	}
+	
+	@GetMapping("/getForUser/{user_id}")
+	public ResponseEntity<Object> getForUser(@PathVariable UUID user_id){
+		Optional<List<Instrument>> resultSet;
+		try {
+			resultSet = repo.findAllByUserId(user_id);
+		} catch (NoSuchElementException e) {
+			return new ResponseEntity<Object>("User "+user_id+" not found!", HttpStatus.NOT_FOUND);
+		}
+		
+		return new ResponseEntity<Object>(resultSet, HttpStatus.OK);
 	}
 	
 	@GetMapping("/getAllType/{type}")

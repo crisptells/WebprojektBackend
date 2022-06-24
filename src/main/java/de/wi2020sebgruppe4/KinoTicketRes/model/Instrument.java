@@ -2,13 +2,19 @@ package de.wi2020sebgruppe4.KinoTicketRes.model;
 
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 import org.springframework.lang.NonNull;
 
 @Entity
@@ -42,18 +48,22 @@ public class Instrument {
     @Column
     @NonNull
     private String category;
+    
+    @Column
+    private UUID userId;
 
     public Instrument() {
 
     }
 
-    public Instrument(String type, double price, String name, String description, String category) {
+    public Instrument(String type, double price, String name, String description, String category, UUID user) {
         super();
         this.type = type;
         this.price = price;
         this.name = name;
         this.description = description;
         this.category = category;
+        this.userId = user;
     }
 
 	public UUID getId() {
@@ -111,6 +121,14 @@ public class Instrument {
 	public void setCategory(String category) {
 		this.category = category;
 	}
+	
+	public UUID getuserId() {
+		return userId;
+	}
+
+	public void setuserId(UUID userId) {
+		this.userId = userId;
+	}
 
 	@Override
 	public int hashCode() {
@@ -125,6 +143,7 @@ public class Instrument {
 		temp = Double.doubleToLongBits(price);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result + ((type == null) ? 0 : type.hashCode());
+		result = prime * result + ((userId == null) ? 0 : userId.hashCode());
 		return result;
 	}
 
@@ -166,9 +185,11 @@ public class Instrument {
 				return false;
 		} else if (!type.equals(other.type))
 			return false;
+		if (userId == null) {
+			if (other.userId != null)
+				return false;
+		} else if (!userId.equals(other.userId))
+			return false;
 		return true;
 	}
-
-    
-
 }
