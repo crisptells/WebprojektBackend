@@ -1,5 +1,6 @@
 package de.wi2020sebgruppe4.KinoTicketRes.model;
 
+import java.sql.Date;
 import java.util.UUID;
 
 import javax.persistence.CascadeType;
@@ -51,20 +52,31 @@ public class Instrument {
     
     @Column
     private UUID userId;
+    
+    @Column
+    private Date bookingDate;
+    
+    @Column
+    private int bookingDuration;
 
     public Instrument() {
 
     }
 
-    public Instrument(String type, double price, String name, String description, String category, UUID user) {
-        super();
-        this.type = type;
-        this.price = price;
-        this.name = name;
-        this.description = description;
-        this.category = category;
-        this.userId = user;
-    }
+	public Instrument(UUID id, boolean available, String type, double price, String name, String description,
+			String category, UUID userId, Date bookingDate, int bookingDuration) {
+		super();
+		this.id = id;
+		this.available = available;
+		this.type = type;
+		this.price = price;
+		this.name = name;
+		this.description = description;
+		this.category = category;
+		this.userId = userId;
+		this.bookingDate = bookingDate;
+		this.bookingDuration = bookingDuration;
+	}
 
 	public UUID getId() {
 		return id;
@@ -129,12 +141,38 @@ public class Instrument {
 	public void setuserId(UUID userId) {
 		this.userId = userId;
 	}
+	
+	public UUID getUserId() {
+		return userId;
+	}
+
+	public void setUserId(UUID userId) {
+		this.userId = userId;
+	}
+
+	public Date getBookingDate() {
+		return bookingDate;
+	}
+
+	public void setBookingDate(Date bookingDate) {
+		this.bookingDate = bookingDate;
+	}
+
+	public int getBookingDuration() {
+		return bookingDuration;
+	}
+
+	public void setBookingDuration(int bookingDuration) {
+		this.bookingDuration = bookingDuration;
+	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + (available ? 1231 : 1237);
+		result = prime * result + ((bookingDate == null) ? 0 : bookingDate.hashCode());
+		result = prime * result + bookingDuration;
 		result = prime * result + ((category == null) ? 0 : category.hashCode());
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
@@ -157,6 +195,13 @@ public class Instrument {
 			return false;
 		Instrument other = (Instrument) obj;
 		if (available != other.available)
+			return false;
+		if (bookingDate == null) {
+			if (other.bookingDate != null)
+				return false;
+		} else if (!bookingDate.equals(other.bookingDate))
+			return false;
+		if (bookingDuration != other.bookingDuration)
 			return false;
 		if (category == null) {
 			if (other.category != null)
