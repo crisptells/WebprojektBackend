@@ -5,12 +5,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
 
-import de.wi2020sebgruppe4.KinoTicketRes.rest.TestController;
+import de.wi2020sebgruppe4.KinoTicketRes.rest.InstrumentController;
 
 @SpringBootApplication
 @ComponentScan("de.wi2020sebgruppe4.KinoTicketRes.model")
 @EntityScan("de.wi2020sebgruppe4.KinoTicketRes.model")
-@ComponentScan(basePackageClasses = TestController.class)
+@ComponentScan(basePackageClasses = InstrumentController.class)
 public class KinoTicketResApplication {
 
 	public static void main(String[] args) {
