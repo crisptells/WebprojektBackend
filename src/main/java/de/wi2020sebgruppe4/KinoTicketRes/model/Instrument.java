@@ -13,7 +13,7 @@ import javax.persistence.Table;
 import org.springframework.lang.NonNull;
 
 @Entity
-@Table(name="instruments")
+@Table(name="INSTRUMENTS")
 public class Instrument {
 	@Id
     @Column(columnDefinition= "VARBINARY(16)")
@@ -30,7 +30,7 @@ public class Instrument {
     
     @Column
     @NonNull
-    private double price;
+    private long price;
     
     @Column
     @NonNull
@@ -49,31 +49,30 @@ public class Instrument {
     private String pictureLink;
     
     @Column
-    private UUID userId;
+    private UUID USERID;
     
     @Column
-    private Date bookingDate;
+    private Date BOOKINGDATE;
     
     @Column
-    private int bookingDuration;
+    private int BOOKINGDURATION;
 
     public Instrument() {
 
     }
 
-	public Instrument(UUID id, boolean available, String type, double price, String name, String description,
+	public Instrument(boolean available, String type, int price, String name, String description,
 			String category, UUID userId, Date bookingDate, int bookingDuration, String pictureLink) {
 		super();
-		this.id = id;
 		this.available = available;
 		this.type = type;
 		this.price = price;
 		this.name = name;
 		this.description = description;
 		this.category = category;
-		this.userId = userId;
-		this.bookingDate = bookingDate;
-		this.bookingDuration = bookingDuration;
+		this.USERID = userId;
+		this.BOOKINGDATE = bookingDate;
+		this.BOOKINGDURATION = bookingDuration;
 		this.pictureLink = pictureLink;
 	}
 
@@ -101,11 +100,11 @@ public class Instrument {
 		this.type = type;
 	}
 
-	public double getPrice() {
+	public long getPrice() {
 		return price;
 	}
 
-	public void setPrice(double price) {
+	public void setPrice(long price) {
 		this.price = price;
 	}
 
@@ -142,27 +141,27 @@ public class Instrument {
 	}
 
 	public UUID getUserId() {
-		return userId;
+		return USERID;
 	}
 
 	public void setUserId(UUID userId) {
-		this.userId = userId;
+		this.USERID = userId;
 	}
 
 	public Date getBookingDate() {
-		return bookingDate;
+		return BOOKINGDATE;
 	}
 
 	public void setBookingDate(Date bookingDate) {
-		this.bookingDate = bookingDate;
+		this.BOOKINGDATE = bookingDate;
 	}
 
 	public int getBookingDuration() {
-		return bookingDuration;
+		return BOOKINGDURATION;
 	}
 
 	public void setBookingDuration(int bookingDuration) {
-		this.bookingDuration = bookingDuration;
+		this.BOOKINGDURATION = bookingDuration;
 	}
 
 	@Override
@@ -170,18 +169,15 @@ public class Instrument {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + (available ? 1231 : 1237);
-		result = prime * result + ((bookingDate == null) ? 0 : bookingDate.hashCode());
-		result = prime * result + bookingDuration;
+		result = prime * result + ((BOOKINGDATE == null) ? 0 : BOOKINGDATE.hashCode());
+		result = prime * result + BOOKINGDURATION;
 		result = prime * result + ((category == null) ? 0 : category.hashCode());
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((pictureLink == null) ? 0 : pictureLink.hashCode());
-		long temp;
-		temp = Double.doubleToLongBits(price);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result + ((type == null) ? 0 : type.hashCode());
-		result = prime * result + ((userId == null) ? 0 : userId.hashCode());
+		result = prime * result + ((USERID == null) ? 0 : USERID.hashCode());
 		return result;
 	}
 
@@ -196,12 +192,12 @@ public class Instrument {
 		Instrument other = (Instrument) obj;
 		if (available != other.available)
 			return false;
-		if (bookingDate == null) {
-			if (other.bookingDate != null)
+		if (BOOKINGDATE == null) {
+			if (other.BOOKINGDATE != null)
 				return false;
-		} else if (!bookingDate.equals(other.bookingDate))
+		} else if (!BOOKINGDATE.equals(other.BOOKINGDATE))
 			return false;
-		if (bookingDuration != other.bookingDuration)
+		if (BOOKINGDURATION != other.BOOKINGDURATION)
 			return false;
 		if (category == null) {
 			if (other.category != null)
@@ -228,17 +224,15 @@ public class Instrument {
 				return false;
 		} else if (!pictureLink.equals(other.pictureLink))
 			return false;
-		if (Double.doubleToLongBits(price) != Double.doubleToLongBits(other.price))
-			return false;
 		if (type == null) {
 			if (other.type != null)
 				return false;
 		} else if (!type.equals(other.type))
 			return false;
-		if (userId == null) {
-			if (other.userId != null)
+		if (USERID == null) {
+			if (other.USERID != null)
 				return false;
-		} else if (!userId.equals(other.userId))
+		} else if (!USERID.equals(other.USERID))
 			return false;
 		return true;
 	}

@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -67,7 +66,7 @@ public class InstrumentController {
 	public ResponseEntity<Object> getForUser(@PathVariable UUID user_id){
 		Optional<List<Instrument>> resultSet;
 		try {
-			resultSet = repo.findAllByUserId(user_id);
+			resultSet = repo.findAllByUSERID(user_id);
 		} catch (NoSuchElementException e) {
 			return new ResponseEntity<Object>("User "+user_id+" not found!", HttpStatus.NOT_FOUND);
 		}

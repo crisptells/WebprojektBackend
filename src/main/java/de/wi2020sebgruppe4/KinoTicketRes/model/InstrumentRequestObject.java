@@ -6,7 +6,7 @@ import java.util.UUID;
 public class InstrumentRequestObject {
 
 	public String type;
-	public double price;
+	public long price;
 	public String name;
 	public String description;
 	public String category;
@@ -15,7 +15,7 @@ public class InstrumentRequestObject {
 	public Date bookingDate;
 	public int bookingDuration;
 
-    public InstrumentRequestObject(String type, double price, String name, String description, String category, UUID user_id, Date bookingDate, int bookingDuration, String pictureLink) {
+    public InstrumentRequestObject(String type, long price, String name, String description, String category, UUID user_id, Date bookingDate, int bookingDuration, String pictureLink) {
         super();
         this.type = type;
         this.price = price;
