@@ -33,8 +33,10 @@ public class KinoTicketResApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(KinoTicketResApplication.class, args);
 		int l = 200;
-		Instrument i = new Instrument(true, "Schlaginstrument", l, "Pauke", "Ich bin eine Pauke, mich kann man schlagen.", "Pauke", new UUID(2,2), new Date(2), 0, "http://localhost:3000");
+		Instrument i = new Instrument(true, "Schlaginstrument", l, "Pauke", "Ich bin eine Pauke, mich kann man schlagen.", "Pauke", new UUID(2,2), new Date(2), 0, "https://thumbs.static-thomann.de/thumb/padthumb600x600/pics/prod/223985.jpg");
 		repo.save(i);
+		Instrument i2 = new Instrument(true, "Gitarre", 500, "E-Gitarre", "Ich bin eine Gitarre, mich kann man streichen.", "E-Gitarre", new UUID(2,2), new Date(2), 0, "https://thumbs.static-thomann.de/thumb/padthumb600x600/pics/prod/153580.jpg");
+		repo.save(i2);
 	}
 
 }
