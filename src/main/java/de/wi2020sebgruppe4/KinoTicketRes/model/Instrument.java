@@ -50,13 +50,17 @@ public class Instrument {
     private String category;
     
     @Column
+    @NonNull
+    private String pictureLink;
+    
+    @Column
     private UUID userId;
 
     public Instrument() {
 
     }
 
-    public Instrument(String type, double price, String name, String description, String category, UUID user) {
+    public Instrument(String type, double price, String name, String description, String category, UUID user, String pictureLink) {
         super();
         this.type = type;
         this.price = price;
@@ -64,6 +68,7 @@ public class Instrument {
         this.description = description;
         this.category = category;
         this.userId = user;
+        this.pictureLink = pictureLink;
     }
 
 	public UUID getId() {
@@ -122,11 +127,19 @@ public class Instrument {
 		this.category = category;
 	}
 	
-	public UUID getuserId() {
+	public String getPictureLink() {
+		return pictureLink;
+	}
+
+	public void setPictureLink(String pictureLink) {
+		this.pictureLink = pictureLink;
+	}
+
+	public UUID getUserId() {
 		return userId;
 	}
 
-	public void setuserId(UUID userId) {
+	public void setUserId(UUID userId) {
 		this.userId = userId;
 	}
 
@@ -139,6 +152,7 @@ public class Instrument {
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((pictureLink == null) ? 0 : pictureLink.hashCode());
 		long temp;
 		temp = Double.doubleToLongBits(price);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
@@ -177,6 +191,11 @@ public class Instrument {
 			if (other.name != null)
 				return false;
 		} else if (!name.equals(other.name))
+			return false;
+		if (pictureLink == null) {
+			if (other.pictureLink != null)
+				return false;
+		} else if (!pictureLink.equals(other.pictureLink))
 			return false;
 		if (Double.doubleToLongBits(price) != Double.doubleToLongBits(other.price))
 			return false;

@@ -10,8 +10,9 @@ public class InstrumentRequestObject {
 	public String description;
 	public String category;
 	public UUID user_id;
-
-    public InstrumentRequestObject(String type, double price, String name, String description, String category, UUID user_id) {
+	public String pictureLink;
+	
+    public InstrumentRequestObject(String type, double price, String name, String description, String category, UUID user_id, String pictureLink) {
         super();
         this.type = type;
         this.price = price;
@@ -19,6 +20,7 @@ public class InstrumentRequestObject {
         this.description = description;
         this.category = category;
         this.user_id = user_id;
+        this.pictureLink = pictureLink;
     }
 
 }

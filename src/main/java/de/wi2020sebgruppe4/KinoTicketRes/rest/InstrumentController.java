@@ -44,7 +44,8 @@ public class InstrumentController {
 		toAddInstrument.setName(iro.name);
 		toAddInstrument.setPrice(iro.price);
 		toAddInstrument.setType(iro.type);
-		toAddInstrument.setuserId(iro.user_id);
+		toAddInstrument.setUserId(iro.user_id);
+		toAddInstrument.setPictureLink(iro.pictureLink);
 		return new ResponseEntity<Object>(repo.save(toAddInstrument), HttpStatus.CREATED);
 	}
 	
