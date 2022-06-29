@@ -46,7 +46,7 @@ public class KinoTicketResApplication {
 		Instrument i3 = new Instrument(true, "Klavier", 500, "KAWAI Flügel GX-2", "Ich bin ein Klavier, auf mich kann man drücken.", "Flügel", new UUID(2,2), new Date(2), 0, "https://pianohaus-atzert.de/fileadmin/_processed_/9/5/csm_Kawai_Gx_2_ec6f7c3289.jpg");
 		repo.save(i3);
 		
-		User u = new User("Admin", "AdminName", "AdminVorname", "email@email.com", "passwort");
+		User u = new User("Admin", "AdminName", "AdminVorname", "email@email.com", "passwort", "Admin");
 		Urepo.save(u);
 	}
 
