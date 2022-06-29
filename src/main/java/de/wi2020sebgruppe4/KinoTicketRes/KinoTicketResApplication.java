@@ -32,10 +32,11 @@ public class KinoTicketResApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(KinoTicketResApplication.class, args);
-		int l = 200;
-		Instrument i = new Instrument(true, "Schlaginstrument", l, "Pauke", "Ich bin eine Pauke, mich kann man schlagen.", "Pauke", new UUID(2,2), new Date(2), 0, "https://thumbs.static-thomann.de/thumb/padthumb600x600/pics/prod/223985.jpg");
+		Instrument i = new Instrument(true, "Schlaginstrument", 800, "Mapex Venus Fusion", "Komplettes 5-teiliges Schlagzeug Set", "Schlagzeug", new UUID(2,2), new Date(2), 0, "https://www.kirstein.de/out/pictures/generated/product/1/1150_760_75/1a11060987c7ff49c024fd9ffacc9329_1.jpg");
 		repo.save(i);
 		Instrument i2 = new Instrument(true, "Gitarre", 500, "E-Gitarre", "Ich bin eine Gitarre, mich kann man streichen.", "E-Gitarre", new UUID(2,2), new Date(2), 0, "https://thumbs.static-thomann.de/thumb/padthumb600x600/pics/prod/153580.jpg");
+		repo.save(i2);
+		Instrument i3 = new Instrument(true, "Klavier", 500, "KAWAI Flügel GX-2", "Ich bin eine Gitarre, mich kann man streichen.", "Flügel", new UUID(2,2), new Date(2), 0, "https://pianohaus-atzert.de/fileadmin/_processed_/9/5/csm_Kawai_Gx_2_ec6f7c3289.jpg");
 		repo.save(i2);
 	}
 
