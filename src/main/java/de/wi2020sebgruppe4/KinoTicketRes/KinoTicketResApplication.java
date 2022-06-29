@@ -12,7 +12,9 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
 
 import de.wi2020sebgruppe4.KinoTicketRes.model.Instrument;
+import de.wi2020sebgruppe4.KinoTicketRes.model.User;
 import de.wi2020sebgruppe4.KinoTicketRes.repositories.InstrumentRepository;
+import de.wi2020sebgruppe4.KinoTicketRes.repositories.UserRepository;
 import de.wi2020sebgruppe4.KinoTicketRes.rest.InstrumentController;
 
 @SpringBootApplication
@@ -25,9 +27,14 @@ public class KinoTicketResApplication {
 	@Autowired
 	InstrumentRepository r;
 	
+	static UserRepository Urepo;
+	@Autowired
+	UserRepository ur;
+	
 	@PostConstruct
 	public void init() {
 		KinoTicketResApplication.repo = r;
+		KinoTicketResApplication.Urepo = ur;
 	}
 
 	public static void main(String[] args) {
@@ -38,6 +45,9 @@ public class KinoTicketResApplication {
 		repo.save(i2);
 		Instrument i3 = new Instrument(true, "Klavier", 500, "KAWAI Flügel GX-2", "Ich bin eine Gitarre, mich kann man streichen.", "Flügel", new UUID(2,2), new Date(2), 0, "https://pianohaus-atzert.de/fileadmin/_processed_/9/5/csm_Kawai_Gx_2_ec6f7c3289.jpg");
 		repo.save(i3);
+		
+		User u = new User("Admin", "AdminName", "AdminVorname", "email@email.com", "passwort");
+		Urepo.save(u);
 	}
 
 }
