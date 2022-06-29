@@ -61,7 +61,6 @@ public class InstrumentController {
 		catch(NoSuchElementException e) {
 			return new ResponseEntity<Object>("Instrument "+id+" not found!", HttpStatus.NOT_FOUND);
 		}
-		
 	}
 	
 	@GetMapping("/getForUser/{user_id}")
@@ -101,17 +100,21 @@ public class InstrumentController {
 	}
 	
 	@PutMapping("/book/{id}")
-	public ResponseEntity<Object> bookInstrument(@PathVariable UUID id){
+	public ResponseEntity<Object> bookInstrument(@PathVariable UUID id, @RequestBody InstrumentRequestObject iro){
 		Optional<Instrument> i = repo.findById(id);
 		Instrument toBook;
 		try {
 			toBook = i.get();
+			if(toBook.isAvailable() == false) {
+				return new ResponseEntity<Object>("Instrument "+id+" is already booked!", HttpStatus.CONFLICT);
+			}
+			toBook.setBookingDate(iro.bookingDate);
+			toBook.setBookingDuration(iro.bookingDuration);
+			toBook.setAvailable(false);
 		}
 		catch(NoSuchElementException e) {
 			return new ResponseEntity<Object>("Instrument "+id+" not found!", HttpStatus.NOT_FOUND);
 		}
-		
-		toBook.setAvailable(false);
 		return new ResponseEntity<Object>(toBook, HttpStatus.OK);
 	}
 	
@@ -121,12 +124,11 @@ public class InstrumentController {
 		Instrument toBook;
 		try {
 			toBook = i.get();
+			toBook.setAvailable(true);
 		}
 		catch(NoSuchElementException e) {
 			return new ResponseEntity<Object>("Instrument "+id+" not found!", HttpStatus.NOT_FOUND);
 		}
-		
-		toBook.setAvailable(true);
 		return new ResponseEntity<Object>(toBook, HttpStatus.OK);
 	}
 	
