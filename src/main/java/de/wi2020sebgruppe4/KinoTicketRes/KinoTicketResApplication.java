@@ -43,7 +43,7 @@ public class KinoTicketResApplication {
 		repo.save(i);
 		Instrument i2 = new Instrument(true, "Gitarre", 500, "E-Gitarre", "Ich bin eine Gitarre, mich kann man streichen.", "E-Gitarre", new UUID(2,2), new Date(2), 0, "https://thumbs.static-thomann.de/thumb/padthumb600x600/pics/prod/153580.jpg");
 		repo.save(i2);
-		Instrument i3 = new Instrument(true, "Klavier", 500, "KAWAI Flügel GX-2", "Ich bin eine Gitarre, mich kann man streichen.", "Flügel", new UUID(2,2), new Date(2), 0, "https://pianohaus-atzert.de/fileadmin/_processed_/9/5/csm_Kawai_Gx_2_ec6f7c3289.jpg");
+		Instrument i3 = new Instrument(true, "Klavier", 500, "KAWAI Flügel GX-2", "Ich bin ein Klavier, auf mich kann man drücken.", "Flügel", new UUID(2,2), new Date(2), 0, "https://pianohaus-atzert.de/fileadmin/_processed_/9/5/csm_Kawai_Gx_2_ec6f7c3289.jpg");
 		repo.save(i3);
 		
 		User u = new User("Admin", "AdminName", "AdminVorname", "email@email.com", "passwort");
