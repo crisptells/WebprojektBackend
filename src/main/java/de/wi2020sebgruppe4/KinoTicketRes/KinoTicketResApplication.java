@@ -53,7 +53,7 @@ public class KinoTicketResApplication {
 		Instruments.add(new Instrument(true, "Schlaginstrument", 1869, "Gretsch Drums Renown Maple 22\" Silver Oyster Pearl", "Komplettes 5-teiliges Schlagzeug Set", "Schlagzeug", null, null, 0, "https://sc1.musik-produktiv.com/pic-010099942m/gretsch-drums-renown-maple-22-silver-oyster-pearl.jpg"));
 		
 		//Gitarren
-		Instruments.add(new Instrument(true, "Gitarre", 99, "Harley Benton ST-20HSS SBK Standard Series", "Korpus: Linde § geschraubter Hals: Ahorn § Griffbrett: Amaranth", "E-Gitarre", null, null, 0, "https://images.static-thomann.de/pics/bdb/449491/14644831_800.jpg"));
+		Instruments.add(new Instrument(true, "Gitarre", 99, "Harley Benton ST-20HSS SBK Standard Series", "Korpus: Linde § geschraubter Hals: Ahorn § Griffbrett: Amaranth", "E-Gitarre", null, null, 0, "https://thumbs.static-thomann.de/thumb/padthumb600x600/pics/prod/223985.jpg")); 
 		Instruments.add(new Instrument(true, "Gitarre", 159, "Harley Benton TE-52 NA Vintage Series", "Korpus: amerikanische Esche § geschraubter Hals: karamelisierter kanadischer Ahorn mit Roseacer Skunk Stripe § Griffbrett: Ahorn karamellisiert", "E-Gitarre", null, null, 0, "https://images.static-thomann.de/pics/bdb/223985/16636236_800.jpg"));
 		Instruments.add(new Instrument(true, "Gitarre", 249, "Harley Benton HB-35Plus Cherry", "Korpus: Ahorn § eingeleimter Hals: Ahorn § Griffbrett: Lorbeer", "E-Gitarre", null, null, 0, "https://images.static-thomann.de/pics/bdb/374853/14436119_800.jpg"));
 		Instruments.add(new Instrument(true, "Gitarre", 299, "Harley Benton SC-550 II PAF", "Korpus: Mahagoni § eingeleimter Hals: Mahagoni § Griffbrett: Pearloid Trapez", "E-Gitarre", null, null, 0, "https://images.static-thomann.de/pics/bdb/521048/16415201_800.jpg"));
