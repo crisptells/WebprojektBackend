@@ -1,6 +1,5 @@
 package de.wi2020sebgruppe4.KinoTicketRes.rest;
 
-import java.sql.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import de.wi2020sebgruppe4.KinoTicketRes.model.Instrument;
+import de.wi2020sebgruppe4.KinoTicketRes.model.InstrumentBookingRequestObject;
 import de.wi2020sebgruppe4.KinoTicketRes.model.InstrumentRequestObject;
 import de.wi2020sebgruppe4.KinoTicketRes.repositories.InstrumentRepository;
 
@@ -99,22 +99,22 @@ public class InstrumentController {
 		}
 	}
 	
-	@PutMapping("/book/{instrumentId}/{userId}/{date}/{duration}")
-	public ResponseEntity<Object> bookInstrument(@PathVariable UUID instrumentId, @PathVariable UUID userId, @PathVariable Date date, @PathVariable int duration ){
-		Optional<Instrument> i = repo.findById(instrumentId);
+	@PutMapping("/book")
+	public ResponseEntity<Object> bookInstrument(@RequestBody InstrumentBookingRequestObject ibro ){
+		Optional<Instrument> i = repo.findById(ibro.instrumentId);
 		Instrument toBook;
 		try {
 			toBook = i.get();
 			if(toBook.isAvailable() == false) {
-				return new ResponseEntity<Object>("Instrument "+instrumentId+" is already booked!", HttpStatus.CONFLICT);
+				return new ResponseEntity<Object>("Instrument "+ibro.instrumentId+" is already booked!", HttpStatus.CONFLICT);
 			}
-			toBook.setUserId(userId);
-			toBook.setBookingDate(date);
-			toBook.setBookingDuration(duration);
+			toBook.setUserId(ibro.userId);
+			toBook.setBookingDate(ibro.bookingDate);
+			toBook.setBookingDuration(ibro.bookingDuration);
 			toBook.setAvailable(false);
 		}
 		catch(NoSuchElementException e) {
-			return new ResponseEntity<Object>("Instrument "+instrumentId+" not found!", HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Object>("Instrument "+ibro.instrumentId+" not found!", HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<Object>(repo.save(toBook), HttpStatus.OK);
 	}
