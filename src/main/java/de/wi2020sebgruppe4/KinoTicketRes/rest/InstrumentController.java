@@ -107,6 +107,7 @@ public class InstrumentController {
 			if(toBook.isAvailable() == false) {
 				return new ResponseEntity<Object>("Instrument "+iro.instrumentId+" is already booked!", HttpStatus.CONFLICT);
 			}
+			toBook.setUserId(iro.user_id);
 			toBook.setBookingDate(iro.bookingDate);
 			toBook.setBookingDuration(iro.bookingDuration);
 			toBook.setAvailable(false);
@@ -114,7 +115,7 @@ public class InstrumentController {
 		catch(NoSuchElementException e) {
 			return new ResponseEntity<Object>("Instrument "+iro.instrumentId+" not found!", HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<Object>(toBook, HttpStatus.OK);
+		return new ResponseEntity<Object>(repo.save(toBook), HttpStatus.OK);
 	}
 	
 	@PutMapping("/return/{id}")
@@ -124,11 +125,14 @@ public class InstrumentController {
 		try {
 			toBook = i.get();
 			toBook.setAvailable(true);
+			toBook.setUserId(null);
+			toBook.setBookingDate(null);
+			toBook.setBookingDuration(0);
 		}
 		catch(NoSuchElementException e) {
 			return new ResponseEntity<Object>("Instrument "+id+" not found!", HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<Object>(toBook, HttpStatus.OK);
+		return new ResponseEntity<Object>(repo.save(toBook), HttpStatus.OK);
 	}
 	
 	@GetMapping("/AllBooked") 
