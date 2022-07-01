@@ -1,5 +1,6 @@
 package de.wi2020sebgruppe4.KinoTicketRes.rest;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -98,22 +99,22 @@ public class InstrumentController {
 		}
 	}
 	
-	@PutMapping("/book")
-	public ResponseEntity<Object> bookInstrument(@RequestBody InstrumentRequestObject iro){
-		Optional<Instrument> i = repo.findById(iro.instrumentId);
+	@PutMapping("/book/{instrumentId}/{userId}/{date}/{duration}")
+	public ResponseEntity<Object> bookInstrument(@PathVariable UUID instrumentId, @PathVariable UUID userId, @PathVariable Date date, @PathVariable int duration ){
+		Optional<Instrument> i = repo.findById(instrumentId);
 		Instrument toBook;
 		try {
 			toBook = i.get();
 			if(toBook.isAvailable() == false) {
-				return new ResponseEntity<Object>("Instrument "+iro.instrumentId+" is already booked!", HttpStatus.CONFLICT);
+				return new ResponseEntity<Object>("Instrument "+instrumentId+" is already booked!", HttpStatus.CONFLICT);
 			}
-			toBook.setUserId(iro.user_id);
-			toBook.setBookingDate(iro.bookingDate);
-			toBook.setBookingDuration(iro.bookingDuration);
+			toBook.setUserId(userId);
+			toBook.setBookingDate(date);
+			toBook.setBookingDuration(duration);
 			toBook.setAvailable(false);
 		}
 		catch(NoSuchElementException e) {
-			return new ResponseEntity<Object>("Instrument "+iro.instrumentId+" not found!", HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Object>("Instrument "+instrumentId+" not found!", HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<Object>(repo.save(toBook), HttpStatus.OK);
 	}
