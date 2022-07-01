@@ -14,8 +14,9 @@ public class InstrumentRequestObject {
 	public String pictureLink;
 	public Date bookingDate;
 	public int bookingDuration;
+	public UUID instrumentId;
 
-    public InstrumentRequestObject(String type, long price, String name, String description, String category, UUID user_id, Date bookingDate, int bookingDuration, String pictureLink) {
+    public InstrumentRequestObject(String type, long price, String name, String description, String category, UUID user_id, Date bookingDate, int bookingDuration, String pictureLink, UUID instrumentId) {
         super();
         this.type = type;
         this.price = price;
@@ -26,5 +27,6 @@ public class InstrumentRequestObject {
         this.pictureLink = pictureLink;
         this.bookingDate = bookingDate;
         this.bookingDuration = bookingDuration;
+        this.instrumentId = instrumentId;
     }
 }
