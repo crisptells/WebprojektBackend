@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.springframework.lang.NonNull;
@@ -20,10 +21,12 @@ public class Cart {
 
 	@Column
 	@NonNull
+	@OneToMany(mappedBy="id")
 	private String userId;
 	
 	@Column
     @NonNull
+    @OneToMany(mappedBy="id")
     private String instrumentId;
 
     public Cart() {
