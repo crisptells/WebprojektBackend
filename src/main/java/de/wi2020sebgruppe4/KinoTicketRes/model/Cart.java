@@ -1,5 +1,7 @@
 package de.wi2020sebgruppe4.KinoTicketRes.model;
 
+import java.util.UUID;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,52 +18,52 @@ public class Cart {
 	@Id
     @Column(columnDefinition= "VARBINARY(16)")
     @GeneratedValue(strategy = GenerationType.AUTO)
-	private String id;
+	private UUID id;
 
 	@Column
 	@NonNull
-	private String userId;
+	private UUID userId;
 	
 	@Column
     @NonNull
-    private String instrumentId;
+    private UUID instrumentId;
 
     public Cart() {
 
     }
     
-	public Cart( String userId, String instrumentId) {
+	public Cart( UUID userId, UUID instrumentId) {
 		super();
 		this.userId = userId;
 		this.instrumentId = instrumentId;
 	}
 
-	public String getId() {
+	public UUID getId() {
 		return id;
 	}
 
 
-	public void setId(String id) {
+	public void setId(UUID id) {
 		this.id = id;
 	}
 
 
-	public String getUserId() {
+	public UUID getUserId() {
 		return userId;
 	}
 
 
-	public void setUserId(String userId) {
+	public void setUserId(UUID userId) {
 		this.userId = userId;
 	}
 
 
-	public String getInstrumentId() {
+	public UUID getInstrumentId() {
 		return instrumentId;
 	}
 
 
-	public void setInstrumentId(String instrumentId) {
+	public void setInstrumentId(UUID instrumentId) {
 		this.instrumentId = instrumentId;
 	}
 
