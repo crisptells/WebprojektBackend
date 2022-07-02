@@ -2,14 +2,19 @@ package de.wi2020sebgruppe4.KinoTicketRes.model;
 
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.springframework.lang.NonNull;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 @Entity
 @Table(name="CART")
@@ -20,19 +25,21 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.AUTO)
 	private UUID id;
 
-	@Column
-	@NonNull
-	private UUID userId;
+	@ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.REMOVE)
+	@NotFound(action=NotFoundAction.IGNORE)
+	@JoinColumn(name = "user_id", referencedColumnName = "id")
+	private User userId;
 	
-	@Column
-    @NonNull
-    private UUID instrumentId;
+	@ManyToOne(fetch=FetchType.LAZY)
+	@NotFound(action=NotFoundAction.IGNORE)
+	@JoinColumn(name = "instrument_id", referencedColumnName = "id")
+    private Instrument instrumentId;
 
     public Cart() {
 
     }
     
-	public Cart( UUID userId, UUID instrumentId) {
+	public Cart( User userId, Instrument instrumentId) {
 		super();
 		this.userId = userId;
 		this.instrumentId = instrumentId;
@@ -42,28 +49,23 @@ public class Cart {
 		return id;
 	}
 
-
 	public void setId(UUID id) {
 		this.id = id;
 	}
 
-
-	public UUID getUserId() {
+	public User getUserId() {
 		return userId;
 	}
 
-
-	public void setUserId(UUID userId) {
+	public void setUserId(User userId) {
 		this.userId = userId;
 	}
 
-
-	public UUID getInstrumentId() {
+	public Instrument getInstrumentId() {
 		return instrumentId;
 	}
 
-
-	public void setInstrumentId(UUID instrumentId) {
+	public void setInstrumentId(Instrument instrumentId) {
 		this.instrumentId = instrumentId;
 	}
 
@@ -102,6 +104,6 @@ public class Cart {
 		} else if (!userId.equals(other.userId))
 			return false;
 		return true;
-	}    
+	}
 }
 

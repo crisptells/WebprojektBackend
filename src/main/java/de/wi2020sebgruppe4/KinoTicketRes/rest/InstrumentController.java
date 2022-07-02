@@ -17,13 +17,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import Mail.JavaMail;
 import de.wi2020sebgruppe4.KinoTicketRes.model.Cart;
 import de.wi2020sebgruppe4.KinoTicketRes.model.CartRequestObject;
 import de.wi2020sebgruppe4.KinoTicketRes.model.Instrument;
 import de.wi2020sebgruppe4.KinoTicketRes.model.InstrumentBookingRequestObject;
 import de.wi2020sebgruppe4.KinoTicketRes.model.InstrumentRequestObject;
+import de.wi2020sebgruppe4.KinoTicketRes.model.User;
 import de.wi2020sebgruppe4.KinoTicketRes.repositories.CartRepository;
 import de.wi2020sebgruppe4.KinoTicketRes.repositories.InstrumentRepository;
+import de.wi2020sebgruppe4.KinoTicketRes.repositories.UserRepository;
 
 @Controller
 @RestController
@@ -35,6 +38,9 @@ public class InstrumentController {
 	
 	@Autowired
 	CartRepository CartRepo;
+	
+	@Autowired
+	UserRepository UserRepo;
 	
 	@GetMapping("")
 	public ResponseEntity<Iterable<Object>> getInstruments(){
@@ -107,20 +113,38 @@ public class InstrumentController {
 	
 	@PutMapping("/putInCart")
 	public ResponseEntity<Object> CartInstrument(@RequestBody CartRequestObject cro ){
-		Cart cart = new Cart(cro.userId, cro.instrumentId);
+		Optional<Instrument> o = repo.findById(cro.instrumentId);
+		Optional<User> u = UserRepo.findById(cro.userId);
+		try {
+			Instrument toCart = o.get();
+			User user = u.get();
+			Cart cart = new Cart(user, toCart);
 			return new ResponseEntity<Object>(CartRepo.save(cart), HttpStatus.OK);
+		} catch (Exception e ){
+			return new ResponseEntity<Object>("Instrument or User not found!", HttpStatus.NOT_FOUND);
+		}
+		
 	}
 	
 	@GetMapping("/getCart/{userId}")
 	public ResponseEntity<Iterable<Object>> getCart(@PathVariable UUID userId){
-			return new ResponseEntity(CartRepo.findAllByuserId(userId), HttpStatus.OK);
+		Optional<User> u = UserRepo.findById(userId);
+		try {
+			User user = u.get();
+			return new ResponseEntity(CartRepo.findAllByUserId(user), HttpStatus.OK);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 	
 	@PutMapping("/book")
 	public ResponseEntity<Object> bookInstrument(@RequestBody InstrumentBookingRequestObject ibro ){
+		Optional<User> u = UserRepo.findById(ibro.userId);
 		Optional<Instrument> i = repo.findById(ibro.instrumentId);
 		Instrument toBook;
 		try {
+			User user = u.get();
+			
 			toBook = i.get();
 			if(toBook.isAvailable() == false) {
 				return new ResponseEntity<Object>("Instrument "+ibro.instrumentId+" is already booked!", HttpStatus.CONFLICT);
@@ -129,6 +153,7 @@ public class InstrumentController {
 			toBook.setBookingDate(ibro.bookingDate);
 			toBook.setBookingDuration(ibro.bookingDuration);
 			toBook.setAvailable(false);
+			JavaMail.sendTicketConformationMail(user.getEmail(), toBook.getName(), user.getFirstName());
 		}
 		catch(NoSuchElementException e) {
 			return new ResponseEntity<Object>("Instrument "+ibro.instrumentId+" not found!", HttpStatus.NOT_FOUND);
@@ -139,18 +164,27 @@ public class InstrumentController {
 	@PutMapping("/return/{id}")
 	public ResponseEntity<Object> returnInstrument(@PathVariable UUID id){
 		Optional<Instrument> i = repo.findById(id);
-		Instrument toBook;
+		
 		try {
+			Instrument toBook = i.get();
+			try {
+				Optional<Cart> c = CartRepo.findByInstrumentId(toBook);
+				Cart cart = c.get();
+				CartRepo.delete(cart);
+			} catch (Exception e) {
+				return new ResponseEntity<Object>("Cart "+id+" not found!", HttpStatus.NOT_FOUND);
+			}
 			toBook = i.get();
 			toBook.setAvailable(true);
 			toBook.setUserId(null);
 			toBook.setBookingDate(null);
 			toBook.setBookingDuration(0);
+			return new ResponseEntity<Object>(repo.save(toBook), HttpStatus.OK);
 		}
 		catch(NoSuchElementException e) {
 			return new ResponseEntity<Object>("Instrument "+id+" not found!", HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<Object>(repo.save(toBook), HttpStatus.OK);
+		
 	}
 	
 	@GetMapping("/AllBooked") 
