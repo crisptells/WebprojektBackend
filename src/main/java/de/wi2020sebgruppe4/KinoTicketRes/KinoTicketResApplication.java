@@ -72,6 +72,9 @@ public class KinoTicketResApplication {
 
 		User Admin = new User("Admin", "AdminName", "AdminVorname", "email@email.com", "passwort", "Admin");
 		Urepo.save(Admin);
+
+		User Kunde = new User("Kunde", "KundeName", "KundeVorname", "email@email.com", "passwort", "User");
+		Urepo.save(Kunde);
 	}
 
 }
