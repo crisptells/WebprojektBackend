@@ -113,7 +113,7 @@ public class InstrumentController {
 	
 	@GetMapping("/getCart/{userId}")
 	public ResponseEntity<Iterable<Object>> getCart(@PathVariable UUID userId){
-		return new ResponseEntity(CartRepo.findAllByuserId(userId), HttpStatus.OK);
+			return new ResponseEntity(CartRepo.findAllByuserId(userId), HttpStatus.OK);
 	}
 	
 	@PutMapping("/book")

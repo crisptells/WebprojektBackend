@@ -8,9 +8,8 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import de.wi2020sebgruppe4.KinoTicketRes.model.Cart;
-import de.wi2020sebgruppe4.KinoTicketRes.model.Instrument;
 
 @Repository
 public interface CartRepository extends CrudRepository<Cart, UUID>{
-	Optional<List<Instrument>> findAllByuserId(UUID userId);
+	Optional<List<Cart>> findAllByuserId(UUID userId);
 }
