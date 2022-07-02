@@ -132,30 +132,6 @@ public class UserController {
 		return new ResponseEntity<Object>(user, HttpStatus.ACCEPTED);
 	}
 	
-	@GetMapping("/{id}/tickets")
-	public ResponseEntity<Object> getUsersTickets(@PathVariable UUID id) {
-//		Optional<User> u = repo.findById(id);
-//		try {
-//			User user = u.get();
-//			return new ResponseEntity<Object>(ticketRepository.findAllByUser(user), HttpStatus.OK);
-//		}
-//		catch (NoSuchElementException e) {
-			return new ResponseEntity<Object>("UserID: "+ id +" not found :(", HttpStatus.NOT_FOUND);
-//		}
-	}
-	
-	@GetMapping("/{id}/reviews")
-	public ResponseEntity<Object> getusersReviews(@PathVariable UUID id) {
-//		Optional<User> u = repo.findById(id);
-//		try {
-//			User user = u.get();
-//			return new ResponseEntity<Object>(reviewRepository.findAllByUser(user), HttpStatus.OK);
-//		}
-//		catch (NoSuchElementException e) {
-			return new ResponseEntity<Object>("UserID: "+ id +" not found :(", HttpStatus.NOT_FOUND);
-//		}
-	}
-	
 	@GetMapping("/{id}")
 	public ResponseEntity<Object> getSpecific(@PathVariable UUID id){
 		
