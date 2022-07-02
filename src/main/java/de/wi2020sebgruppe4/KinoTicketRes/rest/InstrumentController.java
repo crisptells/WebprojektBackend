@@ -146,13 +146,9 @@ public class InstrumentController {
 			User user = u.get();
 			
 			toBook = i.get();
-			if(toBook.isAvailable() == false) {
-				return new ResponseEntity<Object>("Instrument "+ibro.instrumentId+" is already booked!", HttpStatus.CONFLICT);
-			}
 			toBook.setUserId(ibro.userId);
 			toBook.setBookingDate(ibro.bookingDate);
 			toBook.setBookingDuration(ibro.bookingDuration);
-			toBook.setAvailable(false);
 			JavaMail.sendTicketConformationMail(user.getEmail(), toBook.getName(), user.getFirstName());
 		}
 		catch(NoSuchElementException e) {
@@ -163,28 +159,24 @@ public class InstrumentController {
 	
 	@PutMapping("/return/{id}")
 	public ResponseEntity<Object> returnInstrument(@PathVariable UUID id){
-		Optional<Instrument> i = repo.findById(id);
+		Optional<User> u = UserRepo.findById(id);
 		
 		try {
-			Instrument toBook = i.get();
+			User user = u.get();
 			try {
-				Optional<Cart> c = CartRepo.findByInstrumentId(toBook);
-				Cart cart = c.get();
-				CartRepo.delete(cart);
+				Optional<List<Cart>> c = CartRepo.findAllByUserId(user);
+				List<Cart> cart = c.get();
+				for(Cart ca : cart) {
+					CartRepo.deleteById(ca.id);
+				}
+				return new ResponseEntity<Object>("Cart emptied", HttpStatus.OK);
 			} catch (Exception e) {
 				return new ResponseEntity<Object>("Cart "+id+" not found!", HttpStatus.NOT_FOUND);
 			}
-			toBook = i.get();
-			toBook.setAvailable(true);
-			toBook.setUserId(null);
-			toBook.setBookingDate(null);
-			toBook.setBookingDuration(0);
-			return new ResponseEntity<Object>(repo.save(toBook), HttpStatus.OK);
 		}
 		catch(NoSuchElementException e) {
-			return new ResponseEntity<Object>("Instrument "+id+" not found!", HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Object>("User "+id+" not found!", HttpStatus.NOT_FOUND);
 		}
-		
 	}
 	
 	@GetMapping("/AllBooked") 

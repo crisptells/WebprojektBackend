@@ -23,16 +23,16 @@ public class Cart {
 	@Id
     @Column(columnDefinition= "VARBINARY(16)")
     @GeneratedValue(strategy = GenerationType.AUTO)
-	private UUID id;
+	public UUID id;
 
-	@ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.REMOVE)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@NotFound(action=NotFoundAction.IGNORE)
 	@JoinColumn(name = "user_id", referencedColumnName = "id")
 	private User userId;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@NotFound(action=NotFoundAction.IGNORE)
-	@JoinColumn(name = "instrument_id", referencedColumnName = "id")
+	//@JoinColumn(name = "instrument_id", referencedColumnName = "id")
     private Instrument instrumentId;
 
     public Cart() {

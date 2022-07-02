@@ -1,14 +1,22 @@
 package de.wi2020sebgruppe4.KinoTicketRes.model;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 import org.springframework.lang.NonNull;
 
 @Entity
@@ -43,6 +51,11 @@ public class User {
 	@Column
 	@NonNull
 	private String role;
+	
+	@OneToMany(fetch=FetchType.LAZY)
+	@NotFound(action=NotFoundAction.IGNORE)
+	//@JoinColumn(name = "cart_id", referencedColumnName = "id")
+	private Set<Cart> carts = new HashSet<Cart>();
 	
 	public User() {
 		

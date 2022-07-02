@@ -15,5 +15,4 @@ import de.wi2020sebgruppe4.KinoTicketRes.model.User;
 public interface CartRepository extends CrudRepository<Cart, UUID>{
 	Optional<List<Cart>> findAllByUserId(User user);
 	Optional<Cart> findByInstrumentId(Instrument instrument);
-	
 }
