@@ -45,7 +45,7 @@ public class KinoTicketResApplication {
 		List<Instrument> Instruments = new ArrayList<Instrument>();
 		
 		//Schlagzeuge
-		Instruments.add(new Instrument(true, "Schlaginstrument", 800, "Mapex Venus Fusion", "- Komplettes 5-teiliges Schlagzeug Set", "Schlagzeug", null, null, 0, "https://www.kirstein.de/out/pictures/generated/product/1/1150_760_75/1a11060987c7ff49c024fd9ffacc9329_1.jpg"));
+		Instruments.add(new Instrument(true, "Schlaginstrument", 800, "Mapex Venus Fusion", "- Komplettes 5-teiliges Schlagzeug Set", "Schlagzeug", new UUID(0,0), null, 0, "https://www.kirstein.de/out/pictures/generated/product/1/1150_760_75/1a11060987c7ff49c024fd9ffacc9329_1.jpg"));
 		Instruments.add(new Instrument(true, "Schlaginstrument", 579, "Mapex Tornado 20\" Dark Black", "- Komplettes 5-teiliges Schlagzeug Set", "Schlagzeug", null, null, 0, "https://sc1.musik-produktiv.com/pic-010096541m/mapex-tornado-20-dark-black-drum-set.jpg"));
 		Instruments.add(new Instrument(true, "Schlaginstrument", 859, "Pearl Export 22\" Jet Black", "- Komplettes 5-teiliges Schlagzeug Set", "Schlagzeug", null, null, 0, "https://sc1.musik-produktiv.com/pic-010068564m/pearl-export-22-jet-black-complete-drumset.jpg"));
 		Instruments.add(new Instrument(true, "Schlaginstrument", 1198, "Sonor AQ2 22\" White Pearl", "- Komplettes 5-teiliges Schlagzeug Set", "Schlagzeug", null, null, 0, "https://sc1.musik-produktiv.com/pic-010100005m/sonor-aq2-22-white-pearl-stage-drumset.jpg"));

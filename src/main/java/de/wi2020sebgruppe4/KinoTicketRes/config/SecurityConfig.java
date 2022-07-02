@@ -1,16 +1,5 @@
 package de.wi2020sebgruppe4.KinoTicketRes.config;
 
-import java.io.IOException;
-import java.util.Arrays;
-
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -27,10 +16,11 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @Configuration
 @EnableWebSecurity
 @ComponentScan("de.wi2020sebgruppe4.KinoTicketRes.model")
-public class SecurityConfig extends WebSecurityConfigurerAdapter implements Filter{
+public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {auth.inMemoryAuthentication()
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    	auth.inMemoryAuthentication()
         .withUser("user").password(passwordEncoder().encode("password")).roles("USER")
         .and()
         .withUser("admin").password(passwordEncoder().encode("password")).roles("ADMIN");
@@ -38,22 +28,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements Filt
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-		        .csrf().disable()
-		        .authorizeRequests()
-		        .antMatchers("/admin/**").hasRole("ADMIN")
-		        .antMatchers("/login*").permitAll()
-		        .antMatchers("/registration*").permitAll()
-		        .and()
-		        .cors()
-                .configurationSource(corsConfigurationSource())
-                .and()
-                .authorizeRequests()
-                .anyRequest()
-                .permitAll()
-                .and()
-                .httpBasic()
-        ;
+      http.headers().xssProtection();
+      http
+              .cors().configurationSource(corsConfigurationSource())
+              .and()
+              .csrf().disable();
     }
 
     @Bean
@@ -62,28 +41,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements Filt
     } 
 
     @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "localhost:3000"));
-        configuration.setAllowedMethods(Arrays.asList("HEAD", "GET", "PUT", "DELETE", "PATCH"));
-        configuration.setAllowCredentials(true);
-        configuration.setAllowedHeaders(Arrays.asList("*"));
-
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-
-        return source;
+    CorsConfigurationSource corsConfigurationSource() {
+      CorsConfiguration configuration = new CorsConfiguration();
+      configuration.addAllowedOrigin("*");
+      configuration.addAllowedHeader("*");
+      configuration.addAllowedMethod("*");
+      UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+      source.registerCorsConfiguration("/**", configuration);
+      return source;
     }
-    
-    @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        HttpServletResponse res = (HttpServletResponse) response;
-        res.setHeader("Access-Control-Allow-Origin", "*");
-        res.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE, PUT");
-        res.setHeader("Access-Control-Max-Age", "3600");
-        res.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type, Accept, x-requested-with, Cache-Control");
-        chain.doFilter(request, res);
-    }
-    
 } 

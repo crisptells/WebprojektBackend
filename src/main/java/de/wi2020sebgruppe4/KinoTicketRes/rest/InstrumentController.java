@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import de.wi2020sebgruppe4.KinoTicketRes.model.Instrument;
+import de.wi2020sebgruppe4.KinoTicketRes.model.InstrumentBookingRequestObject;
 import de.wi2020sebgruppe4.KinoTicketRes.model.InstrumentRequestObject;
 import de.wi2020sebgruppe4.KinoTicketRes.repositories.InstrumentRepository;
 
@@ -98,23 +99,24 @@ public class InstrumentController {
 		}
 	}
 	
-	@PutMapping("/book/{id}")
-	public ResponseEntity<Object> bookInstrument(@PathVariable UUID id, @RequestBody InstrumentRequestObject iro){
-		Optional<Instrument> i = repo.findById(id);
+	@PutMapping("/book")
+	public ResponseEntity<Object> bookInstrument(@RequestBody InstrumentBookingRequestObject ibro ){
+		Optional<Instrument> i = repo.findById(ibro.instrumentId);
 		Instrument toBook;
 		try {
 			toBook = i.get();
 			if(toBook.isAvailable() == false) {
-				return new ResponseEntity<Object>("Instrument "+id+" is already booked!", HttpStatus.CONFLICT);
+				return new ResponseEntity<Object>("Instrument "+ibro.instrumentId+" is already booked!", HttpStatus.CONFLICT);
 			}
-			toBook.setBookingDate(iro.bookingDate);
-			toBook.setBookingDuration(iro.bookingDuration);
+			toBook.setUserId(ibro.userId);
+			toBook.setBookingDate(ibro.bookingDate);
+			toBook.setBookingDuration(ibro.bookingDuration);
 			toBook.setAvailable(false);
 		}
 		catch(NoSuchElementException e) {
-			return new ResponseEntity<Object>("Instrument "+id+" not found!", HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Object>("Instrument "+ibro.instrumentId+" not found!", HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<Object>(toBook, HttpStatus.OK);
+		return new ResponseEntity<Object>(repo.save(toBook), HttpStatus.OK);
 	}
 	
 	@PutMapping("/return/{id}")
@@ -124,11 +126,14 @@ public class InstrumentController {
 		try {
 			toBook = i.get();
 			toBook.setAvailable(true);
+			toBook.setUserId(null);
+			toBook.setBookingDate(null);
+			toBook.setBookingDuration(0);
 		}
 		catch(NoSuchElementException e) {
 			return new ResponseEntity<Object>("Instrument "+id+" not found!", HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<Object>(toBook, HttpStatus.OK);
+		return new ResponseEntity<Object>(repo.save(toBook), HttpStatus.OK);
 	}
 	
 	@GetMapping("/AllBooked") 
