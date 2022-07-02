@@ -17,9 +17,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import de.wi2020sebgruppe4.KinoTicketRes.model.Cart;
+import de.wi2020sebgruppe4.KinoTicketRes.model.CartRequestObject;
 import de.wi2020sebgruppe4.KinoTicketRes.model.Instrument;
 import de.wi2020sebgruppe4.KinoTicketRes.model.InstrumentBookingRequestObject;
 import de.wi2020sebgruppe4.KinoTicketRes.model.InstrumentRequestObject;
+import de.wi2020sebgruppe4.KinoTicketRes.repositories.CartRepository;
 import de.wi2020sebgruppe4.KinoTicketRes.repositories.InstrumentRepository;
 
 @Controller
@@ -29,6 +32,9 @@ public class InstrumentController {
 	
 	@Autowired
 	InstrumentRepository repo;
+	
+	@Autowired
+	CartRepository CartRepo;
 	
 	@GetMapping("")
 	public ResponseEntity<Iterable<Object>> getInstruments(){
@@ -97,6 +103,17 @@ public class InstrumentController {
 		} catch (Exception e) {
 			return new ResponseEntity<Object>("Instrument "+id+" not found!", HttpStatus.NOT_FOUND);
 		}
+	}
+	
+	@PutMapping("/putInCart")
+	public ResponseEntity<Object> CartInstrument(@RequestBody CartRequestObject cro ){
+		Cart cart = new Cart(cro.userId, cro.instrumentId);
+		return new ResponseEntity<Object>(CartRepo.save(cart), HttpStatus.OK);
+	}
+	
+	@GetMapping("/getCart")
+	public ResponseEntity<Iterable<Object>> getCart(){
+		return new ResponseEntity(CartRepo.findAll(), HttpStatus.OK);
 	}
 	
 	@PutMapping("/book")
