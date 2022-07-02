@@ -21,12 +21,10 @@ public class Cart {
 
 	@Column
 	@NonNull
-	@OneToMany(mappedBy="id")
 	private String userId;
 	
 	@Column
     @NonNull
-    @OneToMany(mappedBy="id")
     private String instrumentId;
 
     public Cart() {
