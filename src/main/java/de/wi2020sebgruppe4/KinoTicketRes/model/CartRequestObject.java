@@ -1,13 +1,11 @@
 package de.wi2020sebgruppe4.KinoTicketRes.model;
 
-import java.util.UUID;
-
 public class CartRequestObject {
 	
-	public UUID userId;
-	public UUID instrumentId;
+	public String userId;
+	public String instrumentId;
 	
-	public CartRequestObject(UUID userId, UUID instrumentId) {
+	public CartRequestObject(String userId, String instrumentId) {
 		super();
 		this.userId = userId;
 		this.instrumentId = instrumentId;
